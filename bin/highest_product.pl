@@ -4,29 +4,53 @@ use strict;
 use Data::Dumper;
 $Data::Dumper::Sortkeys = 1;
 
-&highest_product_with_three_ints;
-#&highest_product_with_three_ints_sorting;
+my $highest = get_highest_product_of_three([ 1, 10, -5, 1, -100 ]);
+#&get_highest_product_of_three_sorting;
+print "$highest\n";
 
-
-sub highest_product_with_three_ints {
-    my @integers = (-10, -10, 1, 3, 2);
-    #highest = -10 * -10 * 3 = 300
-
-    my $highest = 1;
-    foreach my $i ( 0 .. $#integers ) {
-        my $product = $integers[$i-1] * $integers[$i] * $integers[$i+1];
-        if ( $product >= $highest ) {
-            $highest = $product;
-        }
-        
+# we need:
+# highest product of 3 ints
+# highest product of 2
+# lowest product of 2
+# highest int
+# lowest
+sub get_highest_product_of_three {
+    my $val = shift;
+    my @integers = @$val;
+    
+    my $product_of_two = $integers[0] * $integers[1];
+    my $highest_product_of_two = $product_of_two;
+    my $lowest_product_of_two = $product_of_two;
+    my $highest_product_of_three = $product_of_two * $integers[2];
+    my $highest = max($integers[0], $integers[1]);
+    my $lowest  = min($integers[0], $integers[1]);
+    foreach my $i ( 2 .. $#integers ) {
+        my $current_val = $integers[$i];
+        $highest_product_of_three = max( $highest_product_of_three, $highest_product_of_two*$current_val, $lowest_product_of_two*$current_val );
+        $highest_product_of_two = max( $highest_product_of_two, $highest*$current_val, $lowest*$current_val );
+        $lowest_product_of_two = min( $lowest_product_of_two, $highest*$current_val, $lowest*$current_val );
+        $highest = max($current_val, $highest);
+        $lowest = min($current_val, $lowest);
     }
+    return $highest_product_of_three;
+}
 
-    print "$highest\n";
+sub max {
+    my ($first, $second, $third) = @_;    
+    my $highest = $first > $second ? $first : $second;
+    $highest = $third > $highest ? $third : $highest if ( $third );
+    return $highest;
+}
 
+sub min {
+    my ($first, $second, $third) = @_;
+    my $lowest = $first < $second ? $first : $second;
+    $lowest = $third < $lowest ? $third : $lowest if ( $third );
+    return $lowest;
 }
 
 # sorting O(nlogn)
-sub highest_product_with_three_ints_sorting {
+sub get_highest_product_of_three_sorting {
     my @integers = (2, 5, 4, 3, 6);
     # highest = 5*4*6 = 120 = product of three biggest integers
    
