@@ -1,0 +1,43 @@
+#!/usr/bin/perl
+# find if a target number is in the list
+use Data::Dumper;
+
+my $target = 4;
+my @nums = (2, 3, 7, 8, 11, 15, 16, 20, 21, 30);
+
+my $ret_val = &binary_search($target, \@nums);
+print "return value is $ret_val\n";
+
+sub binary_search {
+    my $target = shift;
+    my $nums = shift;
+    my @list = @$nums;
+
+    print "target is $target\n";
+    print "nums are @list \n";
+
+    my $floor_index = -1;
+    my $ceiling_index = scalar(@list);
+    print "initial: floor=$floor_index, ceiling=$ceiling_index\n";
+    while ( $floor_index + 1 < $ceiling_index ) {
+        my $distance = $ceiling_index - $floor_index;
+        my $half_distance = int($distance/2);
+        my $guess_index = $floor_index + $half_distance;
+        my $guess_value = $list[$guess_index];
+
+        print "distance=$distance, half=$half_distance, guess_index=$guess_index, guess_value=$guess_value\n";
+
+        if ( $guess_value == $target ) {
+            return 1;
+        }
+
+        if ( $guess_value > $target ) { # need new ceiling
+            $ceiling_index = $guess_index;
+        } else { # need new floor
+            $floor_index = $guess_index;
+        }
+        print "new: floor=$floor_index, ceiling=$ceiling_index\n";
+    }
+    
+    return 0;
+}
