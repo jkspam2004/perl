@@ -1,6 +1,7 @@
 #!/usr/bin/perl -w
 #
 # find the highest product of three integers
+#
 
 use strict;
 use Data::Dumper;
