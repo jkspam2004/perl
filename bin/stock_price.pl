@@ -1,6 +1,7 @@
 #!/usr/bin/perl -w
 #
 # find the max profit from stock sale. buy before sell
+#
 
 use strict;
 use Data::Dumper;
