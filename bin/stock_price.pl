@@ -1,11 +1,13 @@
 #!/usr/bin/perl -w
+#
+# find the max profit from stock sale. buy before sell
 
 use strict;
 use Data::Dumper;
 $Data::Dumper::Sortkeys = 1;
 
-&get_stock_price;
-#&get_stock_price_brute;
+#&get_stock_price;
+&get_stock_price_brute;
 
 # greedy approach O(n)
 # get max profit of stock prices. buy must be before a sell
@@ -80,7 +82,13 @@ sub get_stock_price_brute {
     my @sorted = sort{ $b <=> $a } keys %new;
     print "most profit is $sorted[0] at buy_sell times: @{$new{$sorted[0]}}\n";
 
+=pod
+    my @new = values %profit;
+    my @sorted = sort{ $b <=> $a } @new;
+    print "most profit is $sorted[0]\n";
+=cut
+
     return;
 }
 
-1
+1;

@@ -1,11 +1,13 @@
 #!/usr/bin/perl -w
+#
+# find the highest product of three integers
 
 use strict;
 use Data::Dumper;
 $Data::Dumper::Sortkeys = 1;
 
 my $highest = get_highest_product_of_three([ 1, 10, -5, 1, -100 ]);
-#&get_highest_product_of_three_sorting;
+#my $highest = &get_highest_product_of_three_sorting;
 print "$highest\n";
 
 # we need:
@@ -14,14 +16,14 @@ print "$highest\n";
 # lowest product of 2
 # highest int
 # lowest
+# O(n) time, O(1) space
 sub get_highest_product_of_three {
     my $val = shift;
     my @integers = @$val;
     
-    my $product_of_two = $integers[0] * $integers[1];
-    my $highest_product_of_two = $product_of_two;
-    my $lowest_product_of_two = $product_of_two;
-    my $highest_product_of_three = $product_of_two * $integers[2];
+    my $highest_product_of_two = $integers[0] * $integers[1];
+    my $lowest_product_of_two = $integers[0] * $integers[1];
+    my $highest_product_of_three = $integers[0] * $integers[1] * $integers[2];
     my $highest = max($integers[0], $integers[1]);
     my $lowest  = min($integers[0], $integers[1]);
     foreach my $i ( 2 .. $#integers ) {
@@ -57,9 +59,8 @@ sub get_highest_product_of_three_sorting {
     # sort them from highest to lowest? and then multiply the 3 biggest ints?
     my @sorted = sort{ $b <=> $a } @integers;
     my $highest_product = $sorted[0] * $sorted[1] * $sorted[2];
-    print "highest product=$highest_product\n";
 
-
+    return $highest;
 
 }
 

@@ -1,4 +1,6 @@
 #!/usr/bin/perl -w
+#
+# find the product of all integers except at the index
 
 use strict;
 use Data::Dumper;
