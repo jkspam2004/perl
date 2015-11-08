@@ -1,0 +1,31 @@
+#!/usr/bin/perl
+
+=pod
+You are given a square matrix of size NxN. Can you calculate the absolute difference of the sums across the two main diagonals?
+The first line contains a single integer N. The next N lines contain the rows of N integers describing the matrix.
+Output a single integer equal to the absolute difference in the sums across the diagonals.
+3
+11 2 4
+4 5 6
+10 8 -12
+=cut
+
+my $matrix_size = <>;
+
+my $cur_l2r = 0;
+my $cur_r2l = $matrix_size - 1;
+
+my $sum_l2r = 0;
+my $sum_r2l = 0;
+
+while (<>) {
+    my @input_arr = split(' ', $_);
+    $sum_l2r += $input_arr[$cur_l2r];
+    $sum_r2l += $input_arr[$cur_r2l];
+
+    $cur_l2r += 1;
+    $cur_r2l -= 1;
+}
+
+print(abs($sum_l2r - $sum_r2l)). "\n";
+print "\n";
