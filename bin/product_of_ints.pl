@@ -15,11 +15,11 @@ $Data::Dumper::Sortkeys = 1;
 sub get_products_of_all_ints_except_at_index_best {
     my @integers = (1, 2, 3, 4, 5);
 
-    my %final_product = ();
+    my @final_product = ();
     my $product = 1;
     my $i = 0;
     while ( $i <= $#integers ) {
-        $final_product{$i} = $product; 
+        $final_product[$i] = $product; 
         $product *= $integers[$i];
         $i++;
     }
@@ -27,12 +27,12 @@ sub get_products_of_all_ints_except_at_index_best {
     $product = 1;
     $i = $#integers;
     while ( $i >= 0 ) {
-        $final_product{$i} = $final_product{$i} * $product; 
+        $final_product[$i] = $final_product[$i] * $product; 
         $product *= $integers[$i];
         $i--;
     }
 
-    print "product_of_ints_except_at_index=".  Dumper(\%final_product);
+    print "product_of_ints_except_at_index=".  Dumper(\@final_product);
 }
 
 # greedy approach just O(n) for time
@@ -50,29 +50,29 @@ sub get_products_of_all_ints_except_at_index {
     # get the product of all integers before each index
     #            0  1   2    3        4
     # before = [ 1, 1, 1*2, 1*2*3, 1*2*3*4]
-    my %before = ();
+    my @before = ();
     for my $i ( 0 .. $#integers ) {
-        $before{$i} = $prod;
+        $before[$i] = $prod;
         $prod *= $integers[$i];
     }
-    print "product_of_ints_before=" . Dumper(\%before);
+    print "product_of_ints_before=" . Dumper(\@before);
 
     # get the product of all integers after each index
     #             0       1     2   3  4
     # after = [2*3*4*5, 3*4*5, 4*5, 5, 1]
     $prod = 1;
-    my %after = ();
+    my @after = ();
     for my $i ( reverse(0 .. $#integers) ) {
-        $after{$i} = $prod;
+        $after[$i] = $prod;
         $prod *= $integers[$i];
     }
-    print "product_of_ints_after=" . Dumper(\%after);
+    print "product_of_ints_after=" . Dumper(\@after);
 
-    my %product = ();
+    my @product = ();
     for my $i ( 0 .. $#integers ) {
-        $product{$i} = $before{$i} * $after{$i};
+        $product[$i] = $before[$i] * $after[$i];
     }
-    print "product_of_ints_except_at_index=".  Dumper(\%product);
+    print "product_of_ints_except_at_index=".  Dumper(\@product);
 
     return;
 }
@@ -82,17 +82,16 @@ sub get_products_of_all_ints_except_at_index {
 sub get_products_of_all_ints_except_at_index_brute {
     my @integers = ( 1, 7, 3, 4 );
 
-    my %product = ();
-    for my $i ( 0 .. $#integers ) {
-        $product{$i} = 1;
-        for my $j ( 0 .. $#integers ) {
-            next if ( $i == $j ); 
-            print "i=$i, j=$j\n";
-            $product{$i} = $product{$i} * $integers[$j];
+    my @new = ();
+    for my $i (0 .. $#integers) {
+		$new[$i] = 1;
+        for my $j (0 .. $#integers) {
+            if ($i != $j) {
+                $new[$i] *= $integers[$j];
+            }
         }
     }
-
-    print Dumper(\%product);
+    print Dumper(\@new);
 
     return;
 }
