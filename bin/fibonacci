@@ -1,0 +1,18 @@
+#!/usr/bin/perl -w
+
+sub fib_recurse {
+    my $n = shift;
+
+    if ($n == 0 || $n == 1) {
+        return $n;
+    }
+   
+    print "computing fib_recurse($n)\n";
+    my $fib = fib_recurse($n-1) + fib_recurse($n-2);
+    return $fib;
+}
+
+my $num = 3;
+my $result = fib_recurse($num);
+
+print "fib of $num is $result\n";
